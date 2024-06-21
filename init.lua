@@ -219,6 +219,8 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+vim.keymap.set('n', '<C-T>', '<cmd>Neotree<cr>')
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -244,8 +246,7 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',    opts = {} },
-
+  { 'numToStr/Comment.nvim', opts = {} },
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -279,7 +280,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -331,7 +332,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -413,39 +414,6 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
     end,
   },
-  {
-    'scalameta/nvim-metals',
-    ft = { 'scala', 'sbt' },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    -- stylua: ignore
-    keys = {
-      { "<leader>cW", function() require('metals').hover_worksheet() end,               desc = "Metals Worksheet" },
-      { "<leader>cM", function() require('telescope').extensions.metals.commands() end, desc = "Telescope Metals Commands" },
-    },
-    init = function()
-      local metals_config = require('metals').bare_config()
-
-      metals_config.settings = {
-        showImplicitArguments = true,
-        showImplicitConversionsAndClasses = true,
-        showInferredType = true,
-        superMethodLensesEnabled = true,
-      }
-      metals_config.init_options.statusBarProvider = 'on'
-      metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'scala', 'sbt' },
-        callback = function()
-          require('metals').initialize_or_attach(metals_config)
-        end,
-        group = nvim_metals_group,
-      })
-    end,
-  },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -456,11 +424,11 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim',       opts = {} },
+      { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -814,7 +782,7 @@ require('lazy').setup({
 
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' }
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
@@ -826,7 +794,8 @@ require('lazy').setup({
     init = function()
       require('material').setup {
         style = {
-          comments = { --[[italic = true]] }
+          comments = { --[[italic = true]]
+          },
         },
         disable = {
           background = true,
@@ -897,6 +866,58 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      textobjects = {
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            [']m'] = '@function.outer',
+            ['gj'] = '@function.outer',
+            [']]'] = '@class.outer',
+            [']b'] = '@block.outer',
+            [']a'] = '@parameter.inner',
+          },
+          goto_next_end = {
+            [']M'] = '@function.outer',
+            ['gJ'] = '@function.outer',
+            [']['] = '@class.outer',
+            [']B'] = '@block.outer',
+            [']A'] = '@parameter.inner',
+          },
+          goto_previous_start = {
+            ['[m'] = '@function.outer',
+            ['gk'] = '@function.outer',
+            ['[['] = '@class.outer',
+            ['[b'] = '@block.outer',
+            ['[a'] = '@parameter.inner',
+          },
+          goto_previous_end = {
+            ['[M'] = '@function.outer',
+            ['gK'] = '@function.outer',
+            ['[]'] = '@class.outer',
+            ['[B'] = '@block.outer',
+            ['[A'] = '@parameter.inner',
+          },
+        },
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
+            ['ab'] = '@block.outer',
+            ['ib'] = '@block.inner',
+            ['al'] = '@loop.outer',
+            ['il'] = '@loop.inner',
+            ['a/'] = '@comment.outer',
+            ['i/'] = '@comment.outer', -- no inner for comment
+            ['aa'] = '@parameter.outer', -- parameter -> argument
+            ['ia'] = '@parameter.inner',
+          },
+        },
+      },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -937,6 +958,7 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
+  { import = 'custom.keybinds' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
