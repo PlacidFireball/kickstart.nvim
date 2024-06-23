@@ -13,9 +13,13 @@ return {
   { 'famiu/bufdelete.nvim' },
   {
     'scalameta/nvim-metals',
-    ft = { 'scala', 'sbt' },
+    ft = { 'scala', 'sbt', 'java' },
     dependencies = {
       'nvim-lua/plenary.nvim',
+      {
+        'j-hui/fidget.nvim',
+        opts = {},
+      },
     },
     -- stylua: ignore
     keys = {
@@ -24,6 +28,7 @@ return {
     },
     init = function()
       local metals_config = require('metals').bare_config()
+      require('metals').setup_dap()
 
       metals_config.settings = {
         showImplicitArguments = true,
@@ -31,6 +36,33 @@ return {
         showInferredType = true,
         superMethodLensesEnabled = true,
       }
+
+      local function get_operating_system()
+        if jit then
+          return jit.os
+        end
+
+        local fh, err = assert(io.popen('uname -o 2>/dev/null', 'r'))
+
+        if fh then
+          return fh:read()
+        else
+          return 'Windows'
+        end
+      end
+
+      operating_system = get_operating_system()
+
+      if operating_system == 'Darwin' or operating_system == 'OSX' then
+        -- print('Setting gradleScript/javaHome.')
+        -- print(operating_system)
+        metals_config.settings.gradleScript = '/opt/gradle/gradle-8.0.2/bin/gradle'
+        metals_config.settings.javaHome = '/Library/Java/JavaVirtualMachines/liberica-jdk-17.jdk/Contents/Home'
+      else
+        print 'This is not an apple system. Not setting up gradle/java home'
+        -- print(operating_system)
+      end
+
       metals_config.init_options.statusBarProvider = 'on'
       metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -68,6 +100,7 @@ return {
           hide_dotfiles = false,
           hide_gitignored = false,
         },
+        group_empty_dirs = true,
         window = {
           mappings = {
             ['\\'] = 'close_window',
@@ -75,5 +108,23 @@ return {
         },
       },
     },
-  }
+  },
+  {
+    'alexghergh/nvim-tmux-navigation',
+    config = function()
+      local nvim_tmux_nav = require 'nvim-tmux-navigation'
+
+      nvim_tmux_nav.setup {
+        disable_when_zoomed = true,
+        keybindings = {
+          left = '<C-h>',
+          down = '<C-j>',
+          up = '<C-k>',
+          right = '<C-l>',
+          last_active = '<C-\\>',
+          next = '<C-Space>',
+        },
+      }
+    end,
+  },
 }

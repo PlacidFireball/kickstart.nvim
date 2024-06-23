@@ -55,6 +55,21 @@ return {
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
 
+    vim.keymap.set({ 'n', 'v' }, '<leader>dh', function()
+      require('dap.ui.widgets').hover()
+    end)
+    vim.keymap.set({ 'n', 'v' }, '<leader>dp', function()
+      require('dap.ui.widgets').preview()
+    end)
+    vim.keymap.set('n', '<leader>df', function()
+      local widgets = require 'dap.ui.widgets'
+      widgets.centered_float(widgets.frames)
+    end)
+    vim.keymap.set('n', '<leader>ds', function()
+      local widgets = require 'dap.ui.widgets'
+      widgets.centered_float(widgets.scopes)
+    end)
+
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
@@ -63,19 +78,19 @@ return {
       --    Don't feel like these are good choices.
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
-        element = "repl",
+        element = 'repl',
         enabled = true,
         icons = {
-          disconnect = "",
-          pause = "",
-          play = "",
-          run_last = "",
-          step_back = "",
-          step_into = "",
-          step_out = "",
-          step_over = "",
-          terminate = ""
-        }
+          disconnect = '',
+          pause = '',
+          play = '',
+          run_last = '',
+          step_back = '',
+          step_into = '',
+          step_out = '',
+          step_over = '',
+          terminate = '',
+        },
       },
     }
 
@@ -85,7 +100,27 @@ return {
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    -- Debug settings if you're using nvim-dap
 
+    dap.configurations.scala = {
+      {
+        type = 'scala',
+        request = 'launch',
+        name = 'Run RingMasterApplication',
+        metals = {
+          runType = 'runOrTestFile',
+          --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+        },
+      },
+      {
+        type = 'scala',
+        request = 'launch',
+        name = 'Test Target',
+        metals = {
+          runType = 'testTarget',
+        },
+      },
+    }
     -- Install golang specific config
     require('dap-go').setup {
       delve = {

@@ -96,6 +96,8 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+vim.g.autoformat = false
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -246,7 +248,7 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',    opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -280,7 +282,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -332,7 +334,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -424,11 +426,11 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim',       opts = {} },
+      { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -513,6 +515,7 @@ require('lazy').setup({
           --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          map('<leader>clr', vim.lsp.codelens.run, '[C]ode[l]ens [R]un')
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -805,7 +808,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme('material-deep-ocean')
+      vim.cmd.colorscheme 'material-deep-ocean'
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -912,7 +915,7 @@ require('lazy').setup({
             ['al'] = '@loop.outer',
             ['il'] = '@loop.inner',
             ['a/'] = '@comment.outer',
-            ['i/'] = '@comment.outer',   -- no inner for comment
+            ['i/'] = '@comment.outer', -- no inner for comment
             ['aa'] = '@parameter.outer', -- parameter -> argument
             ['ia'] = '@parameter.inner',
           },
