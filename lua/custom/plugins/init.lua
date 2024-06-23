@@ -51,7 +51,7 @@ return {
         end
       end
 
-      operating_system = get_operating_system()
+      local operating_system = get_operating_system()
 
       if operating_system == 'Darwin' or operating_system == 'OSX' then
         -- print('Setting gradleScript/javaHome.')
@@ -127,4 +127,11 @@ return {
       }
     end,
   },
+  {
+    'Pocco81/auto-save.nvim',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<leader>as', ':ASToggle<CR>', { desc = 'Toggle [A]uto [S]ave' })
+      require("auto-save").setup {}
+    end
+  }
 }
