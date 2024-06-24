@@ -69,6 +69,8 @@ return {
       local widgets = require 'dap.ui.widgets'
       widgets.centered_float(widgets.scopes)
     end)
+    
+    vim.keymap.set('n', '<F10>', dap.terminate, { desc = 'Terminate the currently running process' })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
@@ -107,9 +109,12 @@ return {
         type = 'scala',
         request = 'launch',
         name = 'Run RingMasterApplication',
+        cwd = "/Users/jared.weiss/Dev/nvim-quiq/ring-master/",
         metals = {
-          runType = 'runOrTestFile',
-          --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+          runType = 'run',
+          args = { "-tc", "-p", "51269" },
+          jvmOptions = { "-Duser.dir=/Users/jared.weiss/Dev/nvim-quiq/ring-master/" },
+          -- mainClass = "com.centricent.service.RingMasterApplication"
         },
       },
       {

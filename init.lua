@@ -198,6 +198,11 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -798,23 +803,58 @@ require('lazy').setup({
     'marko-cerovac/material.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      require('material').setup {
-        style = {
-          comments = { [[italic = true]] },
-        },
-        disable = {
-          background = true,
-        },
-        lualine_style = 'stealth',
-      }
+      -- require('material').setup {
+      --   style = {
+      --     comments = { [[italic = true]] },
+      --   },
+      --   disable = {
+      --     background = true,
+      --   },
+      --   lualine_style = 'stealth',
+      -- }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'material-deep-ocean'
+      --vim.cmd.colorscheme 'material-deep-ocean'
       -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
+      --vim.cmd.hi 'Comment gui=none'
     end,
+  },
+  {
+    'AlexvZyl/nordic.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+ --      require 'nordic'.load()
+ --
+ --      require('lualine').setup {
+ --        theme = 'nordic'
+ --      }
+ -- 
+    end
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function(_, _)
+      require("tokyonight").setup {
+        style = 'moon',
+        transparent = false,
+        styles = {
+          comments = { italic = true },
+        },
+        sidebars = { "help", "lazy", "neotree" },
+        lualine_bold = true,
+      }
+
+      require('lualine').setup {
+        theme = 'tokyonight'
+      }
+
+      vim.cmd.colorscheme('tokyonight-moon')
+    end
   },
 
   -- Highlight todo, notes, etc in comments
