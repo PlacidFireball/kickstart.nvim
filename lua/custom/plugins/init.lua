@@ -82,6 +82,20 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
   },
   {
+    'nvim-treesitter/nvim-treesitter-context',
+    after = 'nvim-treesitter',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    config = function ()
+      require("treesitter-context").setup {
+        enable = true,
+      }
+
+      vim.keymap.set('n', '<leader>gtc', function()
+        require('treesitter-context').go_to_context(vim.v.count1)
+      end, { desc = "[G]o [T]o [C]ontext", silent = true })
+    end
+  },
+  {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
     dependencies = {
@@ -133,5 +147,13 @@ return {
       vim.api.nvim_set_keymap('n', '<leader>as', ':ASToggle<CR>', { desc = 'Toggle [A]uto [S]ave' })
       require("auto-save").setup {}
     end
-  }
+  },
+  {
+    "FabijanZulj/blame.nvim",
+    config = function()
+      require("blame").setup()
+
+      vim.keymap.set({'n', 'v'}, '<leader>tgb', '<cmd>BlameToggle<cr>', { desc = '[T]oggle [G]it [B]lame'})
+    end
+  },
 }

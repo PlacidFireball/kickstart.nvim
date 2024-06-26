@@ -172,8 +172,12 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
-vim.keymap.set('n', 'j', 'jzz')
-vim.keymap.set('n', 'k', 'kzz')
+-- vim.keymap.set('n', 'j', 'jzz')
+-- vim.keymap.set('n', 'k', 'kzz')
+vim.keymap.set('n', '<leader>j', '10j', { desc = 'Super [J]' })
+vim.keymap.set('n', '<leader>k', '10k', { desc = 'Super [K]' })
+vim.keymap.set('n', '<leader>h', '10h', { desc = 'Super [H]' })
+vim.keymap.set('n', '<leader>l', '10l', { desc = 'Super [L]' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -202,6 +206,8 @@ vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window big
 vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
 vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
+vim.keymap.set("n", "<leader>term", "<cmd>split<cr><cmd>terminal<cr>i", { desc = 'Fire up a [term]inal in a new pane' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -912,6 +918,9 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      context = {
+
+      },
       textobjects = {
         move = {
           enable = true,
