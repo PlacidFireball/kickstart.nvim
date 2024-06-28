@@ -526,6 +526,21 @@ require('lazy').setup({
           --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          require('lsp_signature').on_attach({
+            bind = true,
+            handler_opts = {
+              
+            }
+          }, bufnr)
+
+          vim.keymap.set({ 'n' }, '<C-k>', function()       
+            require('lsp_signature').toggle_float_win()
+          end, { silent = true, noremap = true, desc = 'toggle signature' })
+
+          vim.keymap.set({ 'n' }, '<Leader>k', function()
+            vim.lsp.buf.signature_help()
+          end, { silent = true, noremap = true, desc = 'toggle signature' })
+
           map('<leader>clr', vim.lsp.codelens.run, '[C]ode[l]ens [R]un')
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
