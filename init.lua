@@ -528,12 +528,10 @@ require('lazy').setup({
 
           require('lsp_signature').on_attach({
             bind = true,
-            handler_opts = {
-              
-            }
+            handler_opts = {}
           }, bufnr)
 
-          vim.keymap.set({ 'n' }, '<C-k>', function()       
+          vim.keymap.set({ 'n' }, '<C-s>', function()       
             require('lsp_signature').toggle_float_win()
           end, { silent = true, noremap = true, desc = 'toggle signature' })
 
