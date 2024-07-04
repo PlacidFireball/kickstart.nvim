@@ -174,10 +174,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- vim.keymap.set('n', 'j', 'jzz')
 -- vim.keymap.set('n', 'k', 'kzz')
-vim.keymap.set('n', '<leader>j', '10j', { desc = 'Super [J]' })
-vim.keymap.set('n', '<leader>k', '10k', { desc = 'Super [K]' })
-vim.keymap.set('n', '<leader>h', '10h', { desc = 'Super [H]' })
-vim.keymap.set('n', '<leader>l', '10l', { desc = 'Super [L]' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -860,9 +856,11 @@ require('lazy').setup({
     config = function(_, _)
       require("tokyonight").setup {
         style = 'moon',
-        transparent = false,
+        transparent = true,
         styles = {
           comments = { italic = true },
+          sidebars = "transparent",
+          floats = "transparent",
         },
         sidebars = { "help", "lazy", "neotree" },
         lualine_bold = true,
@@ -873,6 +871,8 @@ require('lazy').setup({
       }
 
       vim.cmd.colorscheme('tokyonight-moon')
+
+      vim.cmd.highlight('clear CursorLine') -- clears the highlighting of the current line
     end
   },
 
@@ -931,9 +931,6 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
-      context = {
-
-      },
       textobjects = {
         move = {
           enable = true,

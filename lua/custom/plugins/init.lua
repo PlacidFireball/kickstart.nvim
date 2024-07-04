@@ -87,12 +87,12 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function ()
       require("treesitter-context").setup {
-        enable = true,
+        enable = false,
       }
 
-      vim.keymap.set('n', '<leader>gtc', function()
-        require('treesitter-context').go_to_context(vim.v.count1)
-      end, { desc = "[G]o [T]o [C]ontext", silent = true })
+      -- vim.keymap.set('n', '<leader>gtc', function()
+      --   require('treesitter-context').go_to_context(vim.v.count1)
+      -- end, { desc = "[G]o [T]o [C]ontext", silent = true })
     end
   },
   {
@@ -204,4 +204,14 @@ return {
     tag = 'v2.1',
     config = true,
   },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+
+      "nvim-telescope/telescope.nvim",
+    },
+    config = true
+  }
 }

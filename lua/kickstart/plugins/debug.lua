@@ -72,6 +72,9 @@ return {
     
     vim.keymap.set('n', '<F10>', dap.terminate, { desc = 'Terminate the currently running process' })
 
+    vim.keymap.set('n', '<leader>de', function ()
+      require("dapui").eval()
+    end)
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
@@ -184,6 +187,18 @@ return {
           runType = 'run',
           args = { "-tc", "-p", "51264" },
           jvmOptions = { "-Duser.dir=/Users/jared.weiss/Dev/quiq/event-manager/" },
+          -- mainClass = "com.centricent.service.RingMasterApplication"
+        },
+      },
+      {
+        type = 'scala',
+        request = 'launch',
+        name = 'Run LlmArbiterApplication',
+        cwd = "/Users/jared.weiss/Dev/quiq/llm-arbiter/",
+        metals = {
+          runType = 'run',
+          args = { "-tc", "-p", "51263" },
+          jvmOptions = { "-Duser.dir=/Users/jared.weiss/Dev/quiq/llm-arbiter/" },
           -- mainClass = "com.centricent.service.RingMasterApplication"
         },
       },
