@@ -213,5 +213,11 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     config = true
+  },
+  {
+    "karb94/neoscroll.nvim",
+    config = function ()
+      require('neoscroll').setup({})
+    end
   }
 }
