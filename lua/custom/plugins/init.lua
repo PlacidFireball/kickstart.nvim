@@ -85,15 +85,15 @@ return {
     'nvim-treesitter/nvim-treesitter-context',
     after = 'nvim-treesitter',
     dependencies = 'nvim-treesitter/nvim-treesitter',
-    config = function ()
-      require("treesitter-context").setup {
+    config = function()
+      require('treesitter-context').setup {
         enable = false,
       }
 
       -- vim.keymap.set('n', '<leader>gtc', function()
       --   require('treesitter-context').go_to_context(vim.v.count1)
       -- end, { desc = "[G]o [T]o [C]ontext", silent = true })
-    end
+    end,
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -145,79 +145,87 @@ return {
     'Pocco81/auto-save.nvim',
     config = function()
       vim.api.nvim_set_keymap('n', '<leader>as', ':ASToggle<CR>', { desc = 'Toggle [A]uto [S]ave' })
-      require("auto-save").setup {}
-    end
+      require('auto-save').setup {}
+    end,
   },
   {
-    "FabijanZulj/blame.nvim",
-    config = function()
-      require("blame").setup()
-
-      vim.keymap.set({'n', 'v'}, '<leader>tgb', '<cmd>BlameToggle<cr>', { desc = '[T]oggle [G]it [B]lame'})
-    end
-  },
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
+    'ray-x/lsp_signature.nvim',
+    event = 'VeryLazy',
     opts = {},
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
+    config = function(_, opts)
+      require('lsp_signature').setup(opts)
+    end,
   },
   {
-    "folke/trouble.nvim",
+    'folke/trouble.nvim',
     opts = {}, -- for default options, refer to the configuration section for custom setup.
-    cmd = "Trouble",
+    cmd = 'Trouble',
     keys = {
       {
-        "<leader>xx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
       },
       {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
       },
       {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Symbols (Trouble)',
       },
       {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
       },
       {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
       },
       {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
       },
     },
   },
   {
-    "gregorias/coerce.nvim",
+    'gregorias/coerce.nvim',
     tag = 'v2.1',
     config = true,
   },
   {
-    "NeogitOrg/neogit",
+    'NeogitOrg/neogit',
     dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
 
-      "nvim-telescope/telescope.nvim",
+      'nvim-telescope/telescope.nvim',
     },
-    config = true
+    config = true,
   },
+  -- {
+  --   "declancm/cinnamon.nvim",
+  --   config = {
+  --     disabled = false,
+  --     keymaps = {
+  --       basic = true,
+  --       extra = true,
+  --     },
+  --     options = {
+  --       delay = 10, -- ms
+  --     },
+  --   },
+  -- }
   {
-    "karb94/neoscroll.nvim",
-    config = function ()
-      require('neoscroll').setup({})
-    end
-  }
+    'chipsenkbeil/distant.nvim',
+    branch = 'v0.3',
+    config = function()
+      require('distant'):setup()
+    end,
+  },
 }

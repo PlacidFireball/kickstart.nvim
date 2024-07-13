@@ -54,4 +54,7 @@ map('n', 'ø', '<cmd>split<cr>')
 
 map('n', '<M-q>', '<cmd>q<cr>')
 
+map('n', '∂ç', '<cmd>DistantConnect ssh://dev1 options="ssh.backend=libssh,ssh.verbose=true"<CR>')
+map('n', '<M-d><M-c>', '<cmd>DistantConnect ssh://dev1 options="ssh.backend=libssh,ssh.verbose=true"<CR>')
+
 return {}
