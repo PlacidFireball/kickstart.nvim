@@ -96,6 +96,10 @@ return {
     end,
   },
   {
+    'desdic/agrolens.nvim',
+    after = 'nvim-treesitter',
+  },
+  {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
     dependencies = {
@@ -209,23 +213,60 @@ return {
     config = true,
   },
   -- {
-  --   "declancm/cinnamon.nvim",
-  --   config = {
-  --     disabled = false,
-  --     keymaps = {
-  --       basic = true,
-  --       extra = true,
-  --     },
-  --     options = {
-  --       delay = 10, -- ms
-  --     },
-  --   },
-  -- }
-  {
-    'chipsenkbeil/distant.nvim',
-    branch = 'v0.3',
-    config = function()
-      require('distant'):setup()
-    end,
-  },
+  --   'startup-nvim/startup.nvim',
+  --   requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+  --   config = function()
+  --     require('startup').setup {
+  --       section_1 = {
+  --         type = 'text',
+  --         align = 'center',
+  --         fold_section = false,
+  --         title = 'Main',
+  --         default_color = '#0000FF',
+  --         content = {
+  --           '      ___           ___           ___                                    ___     ',
+  --           '     /__/\\         /  /\\         /  /\\          ___        ___          /__/\\    ',
+  --           '     \\  \\:\\       /  /:/_       /  /::\\        /__/\\      /  /\\        |  |::\\   ',
+  --           '      \\  \\:\\     /  /:/ /\\     /  /:/\\:\\       \\  \\:\\    /  /:/        |  |:|:\\  ',
+  --           '  _____\\__\\:\\   /  /:/ /:/_   /  /:/  \\:\\       \\  \\:\\  /__/::\\      __|__|:|\\:\\ ',
+  --           ' /__/::::::::\\ /__/:/ /:/ /\\ /__/:/ \\__\\:\\  ___  \\__\\:\\ \\__\\/\\:\\__  /__/::::| \\:\\',
+  --           ' \\  \\:\\~~\\~~\\/ \\  \\:\\/:/ /:/ \\  \\:\\ /  /:/ /__/\\ |  |:|    \\  \\:\\/\\ \\  \\:\\~~\\__\\/',
+  --           '  \\  \\:\\  ~~~   \\  \\::/ /:/   \\  \\:\\  /:/  \\  \\:\\|  |:|     \\__\\::/  \\  \\:\\      ',
+  --           '   \\  \\:\\        \\  \\:\\/:/     \\  \\:\\/:/    \\  \\:\\__|:|     /__/:/    \\  \\:\\     ',
+  --           '    \\  \\:\\        \\  \\::/       \\  \\::/      \\__\\::::/      \\__\\/      \\  \\:\\    ',
+  --           '     \\__\\/         \\__\\/         \\__\\/           ~~~~                   \\__\\/    ',
+  --         },
+  --       },
+  --       section_2 = {
+  --         type = "mapping",
+  --         align  = "center",
+  --         fold_section = false,
+  --         title = "Commands",
+  --         content = {
+  --           { 'Find Files', 'Telescope find_files', '<leader>sf' },
+  --           { 'Live Grep', 'Telesocpe live_grep', '<leader>sg' },
+  --         }
+  --       },
+  --       options = {
+  --         mapping_keys = true,
+  --         empty_lines_between_mappings = true,
+  --         disable_statuslines = true,
+  --         paddings = { 1, 2 },
+  --       },
+  --       mappings = {
+  --         execute_command = '<CR>',
+  --         open_file = 'o',
+  --         open_file_split = '<C-o>',
+  --         open_section = '<TAB>',
+  --         open_help = '?',
+  --       },
+  --       parts = { 'section_1', 'section_2' },
+  --     }
+
+  --     require('startup').create_mappings {
+  --       ['<leader>sf']='<cmd>Telescope find_files<CR>',
+  --       ['<leader>sg']='<cmd>Telescope live_grep<CR>',
+  --     }
+  --   end,
+  -- },
 }

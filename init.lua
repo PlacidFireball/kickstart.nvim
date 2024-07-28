@@ -297,18 +297,26 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+        { desc = '<leader>c_', hidden = true },
+        { desc = '<leader>s_', hidden = true },
+        { group = '[S]earch' },
+        { group = '[T]oggle' },
+        { group = '[W]orkspace' },
+        { desc = '<leader>t_', hidden = true },
+        { desc = '<leader>w_', hidden = true },
+        { desc = '<leader>r_', hidden = true },
+        { desc = '<leader>h_', hidden = true },
+        { group = '[D]ocument' },
+        { group = '[R]ename' },
+        { desc = '<leader>d_', hidden = true },
+        { group = 'Git [H]unk' },
+        { group = '[C]ode' },
       }
+
       -- visual mode
-      require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
+      require('which-key').register {
+        { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
+      }
     end,
   },
 
@@ -379,12 +387,21 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          argolens = {
+            debug = false,
+            same_type = true,
+            include_hidden_buffers = false,
+            disable_indentation = false,
+            aliases = {},
+          },
         },
       }
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+
+      require('telescope').load_extension 'agrolens'
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -399,6 +416,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sm', '<cmd>Telescope agrolens query=functions buffers=all<CR>', { desc = '[S]earch [M]ethods' })
+      vim.keymap.set('n', '<leader>sl', '<cmd>Telescope agrolens query=labels buffers=all<CR>', { desc = '[S]earch [L]abels' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -601,7 +620,16 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         rust_analyzer = {},
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              pythonPath = '/Users/jared.weiss/miniconda3/bin/python',
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = 'openFilesOnly',
+            },
+          },
+        },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -838,7 +866,22 @@ require('lazy').setup({
       vim.cmd.highlight 'clear CursorLine' -- clears the highlighting of the current line
     end,
   },
-
+  -- {
+  --   '0xstepit/flow.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  --   config = function()
+  --     require('flow').setup {
+  --       transparent = true, -- Set transparent background.
+  --       fluo_color = 'pink', --  Fluo color: pink, yellow, orange, or green.
+  --       mode = 'normal', -- Intensity of the palette: normal, bright, desaturate, or dark. Notice that dark is ugly!
+  --       aggressive_spell = false, -- Display colors for spell check.
+  --     }
+  --
+  --     vim.cmd 'colorscheme flow'
+  --   end,
+  -- },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
