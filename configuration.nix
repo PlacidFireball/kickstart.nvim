@@ -35,6 +35,9 @@ in
 # Set your time zone.
   time.timeZone = "America/Denver";
 
+  # user configuration
+  users.defaultUserShell = pkgs.zsh;
+
   home-manager.users.demo = {
     home.stateVersion = "24.05";
 
@@ -52,27 +55,29 @@ in
       qbittorrent
     ];
   };
-  
+
   # networking configuration
   networking.hostName = "jwPersonalNix";
   networking.networkmanager.enable = true;
   #networking.wireless.enable = true;
 
-  #networking.wireless.networks = {
-  #  JnE103 = {
-  #    psk = "J+E2024@2078";
-  #  };
-  #  "JnE103-5G" = {
-  #    psk = "J+E2024@2078";
-  #  };
-  #};
-  
   # enable OpenSSH daemon
   services.openssh.enable = true;
 
   fonts.packages = with pkgs; [
     nerdfonts
   ];
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    # autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    shellAliases = {
+      ll = "ls -l";
+      update = "sudo nixos-rebuild switch";
+    };
+  };
 
   programs.zsh.ohMyZsh = {
     enable = true;
@@ -93,10 +98,20 @@ in
 
   programs.steam.enable = true;
 
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    extraConfig = '''';
+  };
+
+  environment.sessionVariables = rec {
+    LINUX_DISTRO = "nixos";
+  };
+
 # List packages installed in system profile. To search, run:
 # \$ nix search wget
  environment.systemPackages = with pkgs; [
-   wget 
+   wget
    vim
    git
    neovim
@@ -112,6 +127,7 @@ in
    gcc14
    neofetch
    steam
+   zsh-powerlevel10k
 ];
 
 
